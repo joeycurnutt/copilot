@@ -3,7 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "include"
             ],
             "defines": [
                 "_DEBUG",
@@ -18,7 +19,8 @@
         {
             "name": "GCC",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "include"
             ],
             "defines": [
                 "_DEBUG",
