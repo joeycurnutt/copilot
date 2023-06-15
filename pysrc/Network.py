@@ -83,7 +83,6 @@ class Network:
             
         # the sum of weighted activations plus bias
         weighted_sums = np.dot(self.weights[layer], input) + self.biases[layer][:, np.newaxis]
-    
         # if second to last layer, then apply softmax instead of activation func
         if layer >= self.layers - 2:
             next_layer = softmax(weighted_sums) #only for use in multi-class classification problems
