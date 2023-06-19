@@ -15,6 +15,8 @@ namespace copilot {
             std::vector<double> layout;
             int layers;
             std::string activation;
+            bool classification;
+            std::string last_layer;
 
             Network();
             Network(std::string f_weights);
@@ -27,6 +29,7 @@ namespace copilot {
             std::vector<double> sigmoid_vectorized(std::vector<double> x);
             std::vector<double> softmax(std::vector<double> x);
             std::vector<double> tanh_vectorized(std::vector<double> x);
+            std::vector<double> linear_vectorized(std::vector<double> x);
 
     };
 };

@@ -5,10 +5,13 @@ class Network:
     def __init__(self, *args):
         self.layers = Settings.layers
         self.activation = Settings.activation
+        self.last_layer = Settings.last_layer
+        self.dropout_rate = Settings.dropout_rate
         self.weights = []
         self.biases = []
         self.weighted_sums = []
         self.neurons = []
+        self.dropout_mask = []
 
         if len(args) == 1:
             self.load_from_file(args[0])
@@ -67,6 +70,12 @@ class Network:
             file.write(biases + "\n")
         
         file.close()
+
+    def apply_dropout(self, inputs: np.ndarray, dropoutRate: float):
+        mask = np.random.binomial(1, 1 - dropoutRate, size=inputs.shape) / (1 - dropoutRate)
+        self.dropout_mask.append(mask)
+        dropout_outputs = inputs * mask
+        return dropout_outputs
     
     # recursive feed
     def feed(self, input: np.ndarray) -> np.ndarray:
@@ -83,9 +92,18 @@ class Network:
             
         # the sum of weighted activations plus bias
         weighted_sums = np.dot(self.weights[layer], input) + self.biases[layer][:, np.newaxis]
+        
+        if Settings.train and layer < self.layers - 2:
+            weighted_sums = self.apply_dropout(weighted_sums, self.dropout_rate)
+
         # if second to last layer, then apply softmax instead of activation func
         if layer >= self.layers - 2:
-            next_layer = softmax(weighted_sums) #only for use in multi-class classification problems
+            if self.last_layer == "softmax":
+                next_layer = softmax(weighted_sums)
+            elif self.last_layer == "sigmoid":
+                next_layer = np.vectorize(tanh)(weighted_sums)
+            elif self.last_layer == "linear":
+                next_layer = linear(weighted_sums)
         elif self.activation == "relu":
             next_layer = np.vectorize(ReLU)(weighted_sums)
         elif self.activation == "sigmoid":
@@ -118,3 +136,9 @@ def tanh(x):
 
 def dtanh(x):
     return 1 - tanh(x)**2
+
+def linear(x):
+    return(x)
+
+def dlinear(x):
+    return 1

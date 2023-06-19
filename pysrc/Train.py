@@ -34,7 +34,7 @@ class Train:
     # matrify this
     def get_cost(self, inputs: np.ndarray, labels: np.ndarray):
         result = self.network.feed(inputs)
-        target = np.zeros((labels.size, 3)) #Num classes
+        target = np.zeros((labels.size, Settings.layout[-1])) #Num classes
         target[np.arange(labels.size), labels.astype(int)] = 1
         cost = np.square(result - target.transpose())
         
@@ -42,7 +42,7 @@ class Train:
     
     def get_cost_prime(self, inputs: np.ndarray, labels: np.ndarray):
         result = self.network.feed(inputs)
-        target = np.zeros((labels.size, 3)) #num classes
+        target = np.zeros((labels.size, Settings.layout[-1])) #num classes
         target[np.arange(labels.size), labels.astype(int)] = 1
 
         return result - target.transpose()
@@ -141,5 +141,14 @@ class Train:
             dz_next *= np.vectorize(dReLU)(z)
         elif self.network.activation == "tanh":
             dz_next *= np.vectorize(dtanh)(z)
+        elif self.network.activation == "linear":
+            dz_next *= np.vectorize(dlinear)(z)
+
+        # Apply dropout mask during backpropagation
+        if self.network.dropout_rate > 0:
+            try:
+                dz *= self.network.dropout_mask[layer - 1]
+            except:
+                pass
         
         self.back_propagate(layer - 1, dz_next, grad_w, grad_b)

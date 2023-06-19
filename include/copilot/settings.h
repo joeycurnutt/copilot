@@ -13,6 +13,8 @@ namespace copilot{
             int layers; // number of layers [2,inf)
             std::vector<double> layout; // format as [in_nodes,hidden_1 nodes,...,output_nodes]
             std::string activation; // relu, sigmoid, tanh
+            bool classification; //Is this a classification or regression
+            std::string last_layer; //last layer activation
 
             Settings();
             ~Settings();

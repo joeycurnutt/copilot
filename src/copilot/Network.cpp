@@ -19,6 +19,8 @@ using namespace copilot;
         layout = settings.layout;
         layers = settings.layers;
         activation = settings.activation;
+        classification = settings.classification;
+        last_layer = settings.last_layer;
 
         int i = 0;
         std::ifstream file(f_weights);
@@ -98,7 +100,13 @@ using namespace copilot;
             std::cout << "\n\n";
             std::vector<double> next_layer;
             if (layer >= layers - 2) {
-                next_layer = softmax(weighted_sums);
+                if(last_layer == "softmax"){
+                    next_layer = softmax(weighted_sums);
+                } else if (last_layer == "sigmoid"){
+                    next_layer = sigmoid_vectorized(weighted_sums);
+                } else if (last_layer == "linear"){
+                    next_layer = linear_vectorized(weighted_sums);
+                }
                 std::cout << "Last layer: ";
                 for (int a = 0; a < next_layer.size(); a++){
                     std::cout << next_layer[a] << " ";
@@ -113,6 +121,7 @@ using namespace copilot;
             
             return forward_propagate(next_layer, layer + 1);
     }
+
     std::vector<double> Network::ReLU_vectorized(std::vector<double> x) {
         std::vector<double> result;
         for (int i = 0; i < x.size(); i++) {
@@ -157,4 +166,8 @@ using namespace copilot;
             result.push_back(tanh(x[i]));
         }
         return result;
+    }
+
+    std::vector<double> Network::linear_vectorized(std::vector<double> x) {
+        return x;
     }
