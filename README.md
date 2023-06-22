@@ -7,6 +7,7 @@ A C++ implementation that pairs with [Mark Dai's](github.com/Markerpullus) Neura
 * Multiclass classification
 * Regression
 * Training with dropout
+New release coming once functionality is confirmed, v1.0.0 only includes multiclass classification
 
 ### TODO
 * Optimize memory usage and speed
