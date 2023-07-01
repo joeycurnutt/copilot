@@ -3,13 +3,16 @@ copilot is a library for VEX Robotics that implements deep learning techniques t
 
 A C++ implementation that pairs with [Mark Dai's](github.com/Markerpullus) Neural Network from scratch in Python
 
-### Installation
+### Installation and Use - C++
 This is designed as a pros template, so there will be a specific list of steps to follow for installation:
   1. Download the latest release. This represents the last stable update of code and can be modified as you wish for your needs.
   2. Extract and open the folder in a pros project
   3. Use "pros make template" to create a zipped folder, should be "copilot@version_number"
   4. In your project that will be uploaded to the robot, open a terminal in that directory and run "pros c fetch copilot"
   5. At this point the code is ready for use
+
+### Installation and Use - Python
+Once the .zip of the latest stable release has been downloaded, the python code can be run in the downloaded directory, no need to move it into your main project unless you desire. The template will not include anything but source and header files in C++.
 
 ### Capabilities
 * Binary classification
