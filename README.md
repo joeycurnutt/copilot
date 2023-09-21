@@ -1,7 +1,7 @@
 # copilot
 copilot is a library for VEX Robotics that implements deep learning techniques to skillfully automate robotics
 
-A C++ implementation that pairs with [Mark Dai's](github.com/Markerpullus) Neural Network from scratch in Python
+A C++ implementation that pairs with [Mark Dai's](https://github.com/Markerpullus) Neural Network from scratch in Python
 
 ### Installation and Use - C++
 This is designed as a pros template, so there will be a specific list of steps to follow for installation:
