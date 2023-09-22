@@ -4,8 +4,9 @@ import numpy as np
 net = Network("..\weights\weights.txt")
 
 # feed to network
-input = np.array([0.00375,9999,9999,1006,940])
+input = np.array([4.8,3.1,1.6,0.2])
 out_array = net.feed(input)
+print(out_array)
 result = []
 for i in out_array:
     count = 0

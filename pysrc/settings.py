@@ -9,7 +9,7 @@ class Settings:
     activation = "tanh" # relu, sigmoid, tanh, linear (linear not recommended for hidden layers)
     alpha = 0.5 # learning rate 0-1
     decay = 0.3 # decay rate 0-1
-    batches = 200
+    batches = 5
     dropout_rate = 0.5 #.5 recommended, use 0 to bypass dropout
 
     normalization = True

@@ -56,7 +56,11 @@ class Train:
             df=(df-df.min())/(df.max()-df.min())
 
         lines = df.shape[0]
-        print(lines)
+        
+        if Settings.batches > int(lines/2): Settings.batches = int(lines/2)
+        if Settings.batches <= 0: Settings.batches = 1
+
+        print(Settings.batches)
         
         split = round(lines/10)
         '''# calculate cost
