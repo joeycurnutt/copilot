@@ -72,7 +72,7 @@ class Network:
         file.close()
 
     def apply_dropout(self, inputs: np.ndarray, dropoutRate: float):
-        mask = np.random.binomial(1, 1 - dropoutRate, size=inputs.shape) / (1 - dropoutRate)
+        mask = np.random.binomial(1, 1 - dropoutRate, size=inputs.shape)
         self.dropout_mask.append(mask)
         dropout_outputs = inputs * mask
         return dropout_outputs
@@ -93,7 +93,7 @@ class Network:
         # the sum of weighted activations plus bias
         weighted_sums = np.dot(self.weights[layer], input) + self.biases[layer][:, np.newaxis]
         
-        if Settings.train and layer < self.layers - 2:
+        if Settings.train and layer < self.layers - 2 and self.dropout_rate > 0:
             weighted_sums = self.apply_dropout(weighted_sums, self.dropout_rate)
 
         # if second to last layer, then apply softmax instead of activation func
@@ -141,4 +141,4 @@ def linear(x):
     return(x)
 
 def dlinear(x):
-    return 1
+    return x/x

@@ -51,22 +51,27 @@ class Train:
         train_data = np.array(pd.read_csv(f_train_data))
 
         df = pd.read_csv(f_train_data)
-        normalized_df=(df-df.min())/(df.max()-df.min())
         
+        if Settings.normalization:
+            df=(df-df.min())/(df.max()-df.min())
 
+        lines = df.shape[0]
+        print(lines)
+        
+        split = round(lines/10)
         '''# calculate cost
         self.cost = self.get_cost(test_row[1:], test_row[0]) # input data, correct label
         print(f"cost: {self.cost}")
         #print(f"weighted sums: {self.network.weighted_sums}")
         print(f"neurons: {self.network.neurons[3]}")'''
 
-        train_labels = train_data[500:60001, 0].transpose()
-        test_labels = train_data[:500, 0].transpose()
+        train_labels = train_data[split:lines, 0].transpose()
+        test_labels = train_data[:split, 0].transpose()
 
-        train_data = np.array(normalized_df)
+        train_data = np.array(df)
 
-        train_inputs = train_data[500:60001, 1:].transpose() # first 50 samples
-        test_inputs = train_data[:500, 1:].transpose()
+        train_inputs = train_data[split:lines, 1:].transpose() # first 50 samples
+        test_inputs = train_data[:split, 1:].transpose()
         
 
         # gradient descent (original)
